@@ -22,6 +22,16 @@
 
   </form>
 
+  <!-- delete buttons live in their own separate forms, outside the /user form -->
+  <div class="delete-buttons">
+    <% users.forEach(function(user) { %>
+      <form action="/delete" method="post" style="display:inline;">
+        <input type="hidden" name="userId" value="<%= user.id %>">
+        <button type="submit" onclick="return confirm('Delete <%= user.name %>?')">Delete <%= user.name %></button>
+      </form>
+      <% }); %>
+  </div>
+
   <form action="/add" method="post">
     <input type="text" name="country" autofocus placeholder="<%= locals.error ? error :  'Enter country name'%>">
     <button type="submit" style="background-color: <%= color %>;">Add</button>
