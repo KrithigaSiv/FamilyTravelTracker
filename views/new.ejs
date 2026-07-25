@@ -48,6 +48,16 @@
     <div class="spacer"></div>
     <button type="submit">Add</button>
   </form>
+  <% users.forEach(function(user) { %>
+  <input type="submit" name="user" value="<%= user.id %>" id="<%= user.id %>">
+  <label for="<%= user.id %>" style="background-color: <%= user.color %>;">
+    <%= user.name %>
+  </label>
+  <form action="/delete" method="post" style="display:inline;">
+    <input type="hidden" name="userId" value="<%= user.id %>">
+    <button type="submit" onclick="return confirm('Delete <%= user.name %>?')">✕</button>
+  </form>
+<% }); %>
 </body>
 
 </html>

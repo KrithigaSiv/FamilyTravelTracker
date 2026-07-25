@@ -94,4 +94,3 @@ JOIN class c ON c.id = e.class_id;
 
 -- EXERCISE SOLUTION AND SETUP --
 
-Dn

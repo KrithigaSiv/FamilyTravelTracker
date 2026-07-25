@@ -94,6 +94,23 @@ app.post("/new", async (req, res) => {
   
 });
 
+app.post("/delete", async (req, res) => {
+  const idToDelete = req.body.userId;
+
+  // remove their visited countries first (foreign key dependency)
+  await db.query("DELETE FROM visited_countries WHERE user_id = $1", [idToDelete]);
+  // then remove the user
+  await db.query("DELETE FROM users WHERE id = $1", [idToDelete]);
+
+  // if they deleted the currently selected user, fall back to the first remaining user
+  const result = await db.query("SELECT * FROM users");
+  if (result.rows.length > 0) {
+    currentUserId = result.rows[0].id;
+  }
+
+  res.redirect("/");
+});
+
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
